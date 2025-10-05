@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="alphabet_fall.css">
+    <script>
+        let isDragging = false;
+        let can_fall = true;
+        let in_div = false;
+
+        document.addEventListener('mousedown', () => isDragging = true)
+        document.addEventListener('mouseup', () => isDragging = false)
+        document.addEventListener('mousemove', e => {
+            if (isDragging)
+                fall(e.clientX, e.clientY, 'green');
+                
+                fall(e.clientX, e.clientY, 'red');
+            can_fall = false;
+            setTimeout(() => can_fall = true, 50);
+        });
+
+        async function fall(clientX, clientY, color='green') {
+            if (!can_fall || !in_div) return;
+            console.log(in_div);
+
+            all_characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890+-*/=<>!@#$%^&()[]{};:'\",.<>/?\\|`~ "
+            let box = document.createElement('div')
+            box.textContent = all_characters.charAt(Math.floor(Math.random() * all_characters.length))
+            box.className = 'fallable'
+            box.style.color = color
+            box.style.top = `${clientY}px`
+            box.style.left = `${clientX}px`
+            document.body.appendChild(box)
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            box.remove()
+        }
+        
+    </script>
+</head>
+<body>
+    <div id="container">
+    </div>
+    <script>
+        let container = document.getElementById('container');
+
+        container.addEventListener('mouseenter', () => in_div = true);
+        container.addEventListener('mouseleave', (e) => {
+            if (!container.contains(e.relatedTarget)) 
+                in_div = false;
+        });
+
+    </script>
+</body>
+</html>
