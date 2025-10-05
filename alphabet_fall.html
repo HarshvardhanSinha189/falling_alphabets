@@ -15,7 +15,7 @@
         document.addEventListener('mousemove', e => {
             if (isDragging)
                 fall(e.clientX, e.clientY, 'green');
-                
+            else
                 fall(e.clientX, e.clientY, 'red');
             can_fall = false;
             setTimeout(() => can_fall = true, 50);
